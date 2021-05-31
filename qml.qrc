@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>Login.qml</file>
+        <file>Game.qml</file>
+        <file>Cell.qml</file>
+        <file>Field.qml</file>
+        <file>JWT.js</file>
+        <file>MainMenu.qml</file>
+        <file>SSE.js</file>
+        <file>Create.qml</file>
+    </qresource>
+</RCC>
