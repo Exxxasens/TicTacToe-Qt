@@ -7,7 +7,6 @@
         <file>Field.qml</file>
         <file>JWT.js</file>
         <file>MainMenu.qml</file>
-        <file>SSE.js</file>
         <file>Create.qml</file>
     </qresource>
 </RCC>

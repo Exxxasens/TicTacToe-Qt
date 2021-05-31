@@ -29,6 +29,25 @@ Item {
         });
     }
 
+    function register(username, password) {
+
+        isLoading = true;
+        const body = {
+            username: username,
+            password: password
+        };
+        fetchPost(baseURL + '/api/register', body, function(err, result) {
+           isLoading = false;
+
+           if (err) {
+               error = err;
+           } else {
+               error = result;
+           }
+        });
+
+    }
+
     ColumnLayout {
         anchors {
             centerIn: parent
@@ -91,14 +110,27 @@ Item {
             }
         }
 
-        Button {
-            text: "Войти"
-            Layout.alignment: Qt.AlignCenter
-            enabled: !isLoading
-            Layout.topMargin: 30
-            onClicked: {
-                login(_username_textField.text, _password_textField.text, onLogin);
-                error = ''
+        RowLayout {
+            Button {
+                text: "Войти"
+                Layout.alignment: Qt.AlignCenter
+                enabled: !isLoading
+                Layout.topMargin: 30
+                Layout.rightMargin: 10
+                onClicked: {
+                    login(_username_textField.text, _password_textField.text, onLogin);
+                    error = ''
+                }
+            }
+            Button {
+                text: "Регистрация"
+                Layout.alignment: Qt.AlignCenter
+                enabled: !isLoading
+                Layout.topMargin: 30
+                onClicked: {
+                    register(_username_textField.text, _password_textField.text);
+                    error = ''
+                }
             }
         }
 

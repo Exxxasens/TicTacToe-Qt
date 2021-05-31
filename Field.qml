@@ -12,12 +12,12 @@ GridView {
 
         var y = Math.floor(index / root.model.fieldSize);
         var x = index % root.model.fieldSize;
+''
+        if ((currentGame['first_player'] === username && currentGame['next_step'] == 1) || (currentGame['second_player'] === username && currentGame['next_step'] == 2)) {
 
-        console.log('clicked!');
+            currentGame['field'][y][x] = currentGame['next_step'];
 
-        if (currentGame['first_player'] === username && currentGame['next_step'] === 1 || currentGame['second_player'] === username && currentGame['second_player'] === 2) {
-
-            currentGame['game_field'][y][x] = currentGame['next_step'];
+            print('ok')
 
             if (currentGame['next_step'] === 1) {
                 currentGame['next_step'] = 2
@@ -25,7 +25,7 @@ GridView {
                 currentGame['next_step'] = 1;
             }
 
-            updateField(currentGame['game_field']);
+            updateField(currentGame['field']);
 
             fetchPost(baseURL + '/api/game/' + currentGameId + '/step', { y: y, x: x }, function() {
 

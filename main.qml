@@ -3,7 +3,6 @@ import QtQuick.Window 2.2
 import QtQuick.Controls 2.2
 import Qt.WebSockets 1.0
 import 'JWT.js' as JWT
-import 'SSE.js' as SSE
 
 ApplicationWindow {
     id: root
@@ -116,23 +115,31 @@ ApplicationWindow {
         id: _main_menu
         visible: false
 
-        function onJoin(id) {
+        function onJoin(id, createdByUser) {
             currentGameId = id;
             console.log(id)
-            const gameUrl = baseURL + '/api/game/' + id;
+
+
+
+            var gameUrl = baseURL + '/api/game/' + id;
+
+            if (!createdByUser) {
+                gameUrl += '/join'
+            }
 
             fetchPost(gameUrl, {}, function(e, data) {
 
                 console.log('trying to fetch data');
 
                 if (e) {
-                    console.log(error);
+                    console.log(e);
+
                 }
 
                 if (data) {
                     currentGame = data;
 
-                    game.updateField(data['game_field']);
+                    game.updateField(data['field']);
 
                     isTimerRun = true;
 
@@ -149,7 +156,7 @@ ApplicationWindow {
                     return gameCreateError = err;
                 }
 
-                onJoin(result);
+                onJoin(result, true);
             }, true);
 
         }
@@ -184,7 +191,7 @@ ApplicationWindow {
 
                         if (data) {
                             currentGame = data;
-                            game.updateField(data['game_field']);
+                            game.updateField(data['field']);
                         }
 
                     }, true);

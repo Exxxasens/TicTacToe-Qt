@@ -14,8 +14,7 @@ Item {
     anchors.fill: parent
 
     ColumnLayout {
-        Layout.leftMargin: 16
-        Layout.bottomMargin: 16
+        Layout.rightMargin: 10
         width: parent.width
 
         Text {
@@ -23,10 +22,10 @@ Item {
         }
 
         GridLayout {
-            Layout.fillWidth: true
             Layout.bottomMargin: 16
             Layout.rightMargin: 16
             columns: 3
+
             Button {
                 text: "Первый игрок (X)"
                 highlighted: firstStep == 1
@@ -277,6 +276,16 @@ Item {
         Button {
             text: "Создать игру"
             onClicked: onCreate({ "size": fieldSize, "first_step": firstStep, "line_to_win": lineToWin, "multiple_lines": multipleLines });
+            Layout.bottomMargin: 5
+            Layout.rightMargin: 16
+            Layout.alignment: Qt.AlignCenter
+        }
+
+        Button {
+            text: "Назад"
+            onClicked: popPage();
+            Layout.rightMargin: 16
+            Layout.alignment: Qt.AlignCenter
         }
 
     }

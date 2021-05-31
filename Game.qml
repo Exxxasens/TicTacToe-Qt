@@ -1,10 +1,12 @@
 import QtQuick 2.0
 import QtQuick.Layouts 1.1
-import Qt.WebSockets 1.0
+import QtQuick.Controls 2.0
 
 Item {
     id: root
     property string title: "Игра №" + currentGameId
+    property string nextStepTitle: ""
+    property string backBtnText: "< Выход"
 
     function getUsernameFormatted(n, username) {
         var str = 'Игрок ' + n + ':';
@@ -19,7 +21,34 @@ Item {
     }
 
     function updateField(field) {
+        updateNextStep()
         field_component.model.setField(field);
+    }
+
+    function updateNextStep() {
+
+        if (currentGame['status'] === 'finished') {
+            nextStepTitle = 'Победил игрок ';
+
+            if (currentGame['winner'] === 1) {
+                nextStepTitle += currentGame['first_player']
+            } else if (currentGame['winner'] === 2) {
+                nextStepTitle += currentGame['second_player']
+            } else {
+                nextStepTitle = 'Ничья'
+            }
+
+            return null;
+
+        }
+
+        if (currentGame['status'] === 'started') {
+            if (currentGame['next_step'] === 1) {
+                nextStepTitle = 'Ход игрока ' + currentGame['first_player']
+            } else if (currentGame['next_step'] === 2) {
+                nextStepTitle = 'Ход игрока ' + currentGame['second_player']
+            }
+        }
     }
 
     ColumnLayout {
@@ -73,6 +102,13 @@ Item {
             }
         }
 
+        Text {
+            text: nextStepTitle
+            visible: nextStepTitle.length > 0
+            color: "#333333"
+            Layout.alignment: Qt.AlignCenter
+        }
+
         Rectangle {
             id: field_wrapper
             Layout.fillHeight: true
@@ -87,6 +123,16 @@ Item {
                 anchors {
                     centerIn: field_wrapper
                 }
+            }
+        }
+
+        Button {
+            text: 'Назад'
+            Layout.alignment: Qt.AlignCenter
+            onClicked: {
+                currentGame = {}
+                currentGameId = ""
+                popPage()
             }
         }
 
